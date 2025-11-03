@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres
+    image: postgres:16
     container_name: mln-postgres
     environment:
       POSTGRES_DB: mln_analytics
