@@ -1,14 +1,37 @@
-version: '3.8'
-
 services:
+  postgres:
+    image: postgres
+    container_name: mln-postgres
+    environment:
+      POSTGRES_DB: mln_analytics
+      POSTGRES_USER: mln_user
+      POSTGRES_PASSWORD: mln_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mln_user -d mln_analytics"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: mln-backend
     ports:
       - "8000:8000"
-    volumes:
-      - ./data:/app/data
     environment:
-      - PYTHONUNBUFFERED=1
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: mln_analytics
+      DB_USER: mln_user
+      DB_PASSWORD: mln_password
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
 
+volumes:
+  postgres_data:

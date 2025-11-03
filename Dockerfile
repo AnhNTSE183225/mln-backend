@@ -1,22 +1,19 @@
-FROM python:3.11-slim
+FROM maven:3.9-eclipse-temurin-21 AS builder
 
 WORKDIR /app
 
-# Copy requirements first for better caching
-COPY requirements.txt .
+COPY pom.xml .
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN mvn dependency:go-offline -B --no-transfer-progress
 
-# Copy application code
-COPY . .
+COPY src ./src
 
-# Create data directory
-RUN mkdir -p data
+RUN mvn clean package -DskipTests --no-transfer-progress
 
-# Expose port
-EXPOSE 8000
+FROM eclipse-temurin:21-jre
 
-# Run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+WORKDIR /app
 
+COPY --from=builder /app/target/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,0 +1,14 @@
+package com.mln.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PageVisitDto {
+    private String page;
+    private Integer visits;
+}
+

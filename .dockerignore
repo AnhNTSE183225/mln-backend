@@ -11,5 +11,10 @@ env/
 .git
 .gitignore
 *.md
-data/*.json
-
+data/
+target/
+.mvn/
+.m2/
+*.iml
+.idea/
+.vscode/
