@@ -32,21 +32,6 @@ public class AnalyticsController {
         return ResponseEntity.ok(analyticsService.getPageVisits());
     }
     
-    @GetMapping("/hourly-traffic")
-    public ResponseEntity<java.util.List<HourlyTrafficDto>> getHourlyTraffic() {
-        return ResponseEntity.ok(analyticsService.getHourlyTraffic());
-    }
-    
-    @GetMapping("/metrics")
-    public ResponseEntity<MetricsDto> getMetrics() {
-        return ResponseEntity.ok(analyticsService.getMetrics());
-    }
-    
-    @GetMapping("/additional-stats")
-    public ResponseEntity<AdditionalStatsDto> getAdditionalStats() {
-        return ResponseEntity.ok(analyticsService.getAdditionalStats());
-    }
-    
     @PostMapping("/track-visit")
     public ResponseEntity<Map<String, Object>> trackVisit(
             @RequestParam String page,

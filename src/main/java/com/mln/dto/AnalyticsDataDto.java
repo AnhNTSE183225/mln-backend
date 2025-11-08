@@ -12,8 +12,5 @@ import java.util.List;
 public class AnalyticsDataDto {
     private List<DailyVisitorDto> dailyVisitors;
     private List<PageVisitDto> pageVisits;
-    private List<HourlyTrafficDto> hourlyTraffic;
-    private MetricsDto metrics;
-    private AdditionalStatsDto additionalStats;
 }
 
